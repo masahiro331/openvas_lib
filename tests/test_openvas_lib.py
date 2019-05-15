@@ -1,5 +1,5 @@
 import unittest
-import StringIO
+import io
 
 try:
     from xml.etree import cElementTree as etree
@@ -132,16 +132,16 @@ class TestReportParser(unittest.TestCase):
 
     # ----------------------------------------------------------------------
     def test_report_parser_invalid_xml_file(self):
-        xml = StringIO.StringIO("<hellos><hello>asdf</hellos>")
+        xml = io.StringIO("<hellos><hello>asdf</hellos>")
         self.assertRaises(etree.ParseError, report_parser, xml)
 
     def test_report_parser_invalid_xml_without_id(self):
-        xml = StringIO.StringIO('<report extension="xml" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5"><hello></hello></report>')
+        xml = io.StringIO('<report extension="xml" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5"><hello></hello></report>')
 
         self.assertRaises(ValueError, report_parser, xml)
 
     def test_report_parser_check_empty_results(self):
-        xml = StringIO.StringIO('<report extension="xml" type="scan" id="aaaa" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5"></report>')
+        xml = io.StringIO('<report extension="xml" type="scan" id="aaaa" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5"></report>')
 
         r = report_parser(xml)
 
@@ -150,7 +150,7 @@ class TestReportParser(unittest.TestCase):
 
     # ----------------------------------------------------------------------
     def test_report_parser_invalid_threat(self):
-        xml_invalid_thread = StringIO.StringIO('''<report extension="xml" id="23327e93-b82d-4c41-9a26-ce99f15bbc63" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5">
+        xml_invalid_thread = io.StringIO('''<report extension="xml" id="23327e93-b82d-4c41-9a26-ce99f15bbc63" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5">
 	<results start="1" max="148">
 		<result id="685ab07e-9ac8-488e-b7b2-f3f97bd37505">
 			<subnet>10.211.55.35</subnet>
@@ -189,7 +189,7 @@ with its signature.
 	</results>
 </report>''')
 
-        xml_empty_thread = StringIO.StringIO('''<report extension="xml" id="23327e93-b82d-4c41-9a26-ce99f15bbc63" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5">
+        xml_empty_thread = io.StringIO('''<report extension="xml" id="23327e93-b82d-4c41-9a26-ce99f15bbc63" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5">
 	<results start="1" max="148">
 		<result id="685ab07e-9ac8-488e-b7b2-f3f97bd37505">
 			<subnet>10.211.55.35</subnet>
@@ -233,7 +233,7 @@ with its signature.
 
     # ----------------------------------------------------------------------
     def test_report_parser_valid_vulnerability_returned_object_simple_xml(self):
-        xml = StringIO.StringIO('''<report extension="xml" id="23327e93-b82d-4c41-9a26-ce99f15bbc63" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5">
+        xml = io.StringIO('''<report extension="xml" id="23327e93-b82d-4c41-9a26-ce99f15bbc63" type="scan" content_type="text/xml" format_id="a994b278-1f62-11e1-96ac-406186ea4fc5">
 	<results start="1" max="148">
 		<result id="685ab07e-9ac8-488e-b7b2-f3f97bd37505">
 			<subnet>10.211.55.35</subnet>

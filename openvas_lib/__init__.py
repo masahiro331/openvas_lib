@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
+
 
 """
 OpenVAS connector for OMP protocol.
@@ -87,9 +87,9 @@ def report_parser_from_text(text, ignore_log_info=True):
 		raise TypeError("Expected str, got '%s' instead" % type(text))
 
 	try:
-		import cStringIO as S
+		import io as S
 	except ImportError:
-		import StringIO as S
+		import io as S
 
 	return report_parser(S.StringIO(text), ignore_log_info)
 
@@ -148,10 +148,10 @@ def report_parser(path_or_file, ignore_log_info=True):
 		raise TypeError("Expected ElementTree or Element, got '%s' instead" % type(xml_parsed))
 
 
-	if "status" in xml.keys():
+	if "status" in list(xml.keys()):
 		xml = xml[0]
 	# Check valid xml format
-	if "id" not in xml.keys():
+	if "id" not in list(xml.keys()):
 		raise ValueError("XML format is not valid, doesn't contains id attribute.")
 
 	# Regex

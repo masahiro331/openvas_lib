@@ -1084,7 +1084,7 @@ class OMPv7(OMP):
 				'<get_reports report_id="%s" format_id="6c248850-1f62-11e1-b082-406186ea4fc5"/>' % report_id,
 				xml_result=True)
 		except ServerError as e:
-			print("Can't get the HTML for the report %s. Error: %s" % (report_id, e.message))
+			print(("Can't get the HTML for the report %s. Error: %s" % (report_id, e.message)))
 
 		return m_response
 
@@ -1107,7 +1107,7 @@ class OMPv7(OMP):
 		try:
 			m_response = self._manager.make_xml_request('<get_reports report_id="%s" />' % report_id, xml_result=True)
 		except ServerError as e:
-			print("Can't get the xml for the report %s. Error: %s" % (report_id, e.message))
+			print(("Can't get the xml for the report %s. Error: %s" % (report_id, e.message)))
 
 		return m_response
 
